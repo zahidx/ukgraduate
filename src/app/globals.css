@@ -88,6 +88,62 @@ body {
   transition-duration: 150ms;
 }
 
+/* Statistics banner — slow smooth hover in/out (overrides global 150ms) */
+.stat-card {
+  transition:
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 1.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  transform: translateY(0);
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+}
+
+.stat-card .stat-card-cta {
+  transition: border-color 1.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* Images with zoom hover — slow smooth in/out (overrides global 150ms) */
+.img-hover-zoom {
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  transform: scale(1);
+}
+
+.img-hover-zoom:hover,
+.group:hover .img-hover-zoom {
+  transform: scale(1.05);
+}
+
+.img-hover-zoom--subtle:hover,
+.group:hover .img-hover-zoom--subtle {
+  transform: scale(1.02);
+}
+
+.img-hover-overlay {
+  transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.group:hover .img-hover-overlay {
+  opacity: 0.8;
+}
+
+/* Events & notice dashboard sliders — slow smooth slide */
+.dashboard-slide-track {
+  transition: transform 1.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.dashboard-slide-dot {
+  transition:
+    width 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.9s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.dashboard-slide-image {
+  transition: transform 10s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
 /* Hide scrollbar for standard sleek styling */
 ::-webkit-scrollbar {
   width: 8px;

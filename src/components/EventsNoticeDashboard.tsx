@@ -1,7 +1,15 @@
 "use client";
 
 import { ArrowRight, BellRing, CalendarDays, Clock, Shield } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+
+const slideEase = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
+const slideFadeTransition = {
+  duration: 0.85,
+  ease: slideEase,
+};
 
 export default function EventsNoticeDashboard() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -30,16 +38,16 @@ export default function EventsNoticeDashboard() {
   useEffect(() => {
     const imageTimer = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
+    }, 7000);
     const noticeTimer = setInterval(() => {
       setCurrentNoticeIndex((prev) => (prev + 1) % notices.length);
-    }, 6000);
-    
+    }, 8000);
+
     return () => {
       clearInterval(imageTimer);
       clearInterval(noticeTimer);
     };
-  }, []);
+  }, [images.length, notices.length]);
 
   return (
     <section className="py-16 bg-white relative overflow-hidden border-t border-zinc-100">
@@ -53,39 +61,48 @@ export default function EventsNoticeDashboard() {
           
           {/* Col 1: Image Auto Slider (Reduced border-radius to xl, enhanced UI) */}
           <div className="relative rounded-xl overflow-hidden h-[420px] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-zinc-100 bg-zinc-900">
-            <div 
-              className="flex h-full transition-transform duration-1000" 
-              style={{ transform: `translateX(-${currentImageIndex * 100}%)`, transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }}
+            <div
+              className="flex h-full dashboard-slide-track"
+              style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
             >
               {images.map((img, idx) => (
-                <div key={idx} className="w-full h-full flex-shrink-0 relative group">
-                  {/* Slow scale animation for active slide */}
-                  <img 
-                    src={img.src} 
-                    alt={img.title} 
-                    className={`w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${idx === currentImageIndex ? 'scale-110' : 'scale-100'}`} 
+                <div key={idx} className="w-full h-full shrink-0 relative">
+                  <img
+                    src={img.src}
+                    alt={img.title}
+                    className={`w-full h-full object-cover dashboard-slide-image ${idx === currentImageIndex ? 'scale-110' : 'scale-100'}`}
                   />
-                  {/* Seamless gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
-                  
-                  {/* Content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-8 pb-10">
-                    <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider rounded-full mb-4 border border-white/20 shadow-sm">
-                      {img.category}
-                    </span>
-                    <h4 className="text-white font-bold text-xl leading-tight mb-2 drop-shadow-lg">{img.title}</h4>
-                  </div>
                 </div>
               ))}
             </div>
-            
-            {/* Interactive Pill Dots */}
+
+            {/* Caption fades smoothly between slides */}
+            <div className="absolute bottom-0 left-0 right-0 p-8 pb-10 z-10 pointer-events-none">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentImageIndex}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={slideFadeTransition}
+                >
+                  <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider rounded-full mb-4 border border-white/20 shadow-sm">
+                    {images[currentImageIndex].category}
+                  </span>
+                  <h4 className="text-white font-bold text-xl leading-tight mb-2 drop-shadow-lg">
+                    {images[currentImageIndex].title}
+                  </h4>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
             <div className="absolute bottom-5 left-0 right-0 flex justify-center gap-2 z-20">
               {images.map((_, idx) => (
-                <button 
+                <button
                   key={idx}
                   onClick={() => setCurrentImageIndex(idx)}
-                  className={`h-1.5 rounded-full transition-all duration-500 ease-out ${idx === currentImageIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'}`}
+                  className={`h-1.5 rounded-full dashboard-slide-dot ${idx === currentImageIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/60'}`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}
@@ -129,12 +146,15 @@ export default function EventsNoticeDashboard() {
             </div>
             
             <div className="relative flex-1 rounded-xl shadow-sm border border-zinc-100/60 overflow-hidden bg-white group">
-              <div 
-                className="flex h-full transition-transform duration-1000"
-                style={{ transform: `translateX(-${currentNoticeIndex * 100}%)`, transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }}
+              <div
+                className="flex h-full dashboard-slide-track"
+                style={{ transform: `translateX(-${currentNoticeIndex * 100}%)` }}
               >
                 {notices.map((notice, idx) => (
-                  <div key={idx} className="w-full h-full flex-shrink-0 p-8 flex flex-col justify-center bg-white cursor-pointer hover:bg-zinc-50/50 transition-colors">
+                  <div
+                    key={idx}
+                    className="w-full h-full shrink-0 p-8 flex flex-col justify-center bg-white cursor-pointer hover:bg-zinc-50/50 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                  >
                     <div className="flex items-center gap-2 mb-4">
                       <Shield className="w-4 h-4 text-indigo-500" />
                       <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500">{notice.dept}</span>
@@ -142,12 +162,15 @@ export default function EventsNoticeDashboard() {
                     <div className="inline-block self-start px-2 py-1 bg-amber-50 text-amber-700 text-[10px] font-bold rounded mb-3">
                       Deadline: {notice.deadline}
                     </div>
-                    <h4 className="text-base font-bold text-zinc-900 leading-snug mb-6 group-hover:text-indigo-600 transition-colors">
+                    <h4 className="text-base font-bold text-zinc-900 leading-snug mb-6 group-hover:text-indigo-600 transition-colors duration-500">
                       {notice.title}
                     </h4>
-                    <a href="#" className="flex items-center gap-1.5 text-xs font-bold text-indigo-600 mt-auto transition-all">
+                    <a
+                      href="#"
+                      className="flex items-center gap-1.5 text-xs font-bold text-indigo-600 mt-auto"
+                    >
                       View Document
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                     </a>
                   </div>
                 ))}
@@ -159,7 +182,7 @@ export default function EventsNoticeDashboard() {
                 <button
                   key={idx}
                   onClick={() => setCurrentNoticeIndex(idx)}
-                  className={`h-1.5 rounded-full transition-all duration-500 ease-out ${idx === currentNoticeIndex ? 'w-6 bg-indigo-600' : 'w-1.5 bg-indigo-200 hover:bg-indigo-300'}`}
+                  className={`h-1.5 rounded-full dashboard-slide-dot ${idx === currentNoticeIndex ? 'w-6 bg-indigo-600' : 'w-1.5 bg-indigo-200 hover:bg-indigo-300'}`}
                   aria-label={`Go to notice ${idx + 1}`}
                 />
               ))}

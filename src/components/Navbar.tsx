@@ -3,7 +3,20 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Briefcase, GraduationCap, FileText, Menu, X, ArrowRight, Compass, Shield } from 'lucide-react';
+import { Briefcase, GraduationCap, FileText, Menu, X, ArrowRight, Compass } from 'lucide-react';
+import { motion, LayoutGroup } from 'framer-motion';
+
+/** Shared layout animation — slow, smooth slide between nav items */
+const navPillTransition = {
+  layout: {
+    duration: 0.65,
+    ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+  },
+  type: 'spring' as const,
+  stiffness: 120,
+  damping: 24,
+  mass: 1.1,
+};
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Compass },
@@ -16,7 +29,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,40 +79,81 @@ export default function Navbar() {
               <img 
                 src="/images/project.png" 
                 alt="UKGraduate Logo" 
-                className="h-24 md:h-20 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+                className="h-24 md:h-20 w-auto object-contain img-hover-zoom img-hover-zoom--subtle"
               />
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1 bg-zinc-900/50 p-1.5 rounded-full border border-white/5 backdrop-blur-md">
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 ${
-                    isActive
-                      ? 'text-white bg-gradient-to-r from-indigo-600/90 to-indigo-500/80 shadow-md shadow-indigo-500/10'
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  {link.label}
-                  {isActive && (
-                    <span className="absolute inset-0 rounded-full border border-indigo-300/20" />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
+          <LayoutGroup id="main-nav">
+            <nav className="relative hidden md:flex items-center gap-1 bg-zinc-900/50 p-1.5 rounded-full border border-white/5 backdrop-blur-md">
+              {navLinks.map((link, index) => {
+                const Icon = link.icon;
+                const isActive =
+                  link.href === '/'
+                    ? pathname === '/'
+                    : pathname === link.href || pathname.startsWith(`${link.href}/`);
+                const isHovered = hoveredIndex === index;
+                const showHoverPill = isHovered && !isActive;
+
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    className={`group relative z-10 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium tracking-wide select-none transition-[color,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-px ${
+                      isActive ? 'text-white' : 'text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    {/* Hover pill — slides between items; hidden on active item */}
+                    {showHoverPill && (
+                      <motion.div
+                        layoutId="navHoverPill"
+                        layout
+                        className="absolute inset-0 rounded-full bg-white/[0.07] z-0"
+                        transition={navPillTransition}
+                        initial={false}
+                      />
+                    )}
+
+                    {/* Active pill — slides smoothly on route change */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="navActivePill"
+                        layout
+                        className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-600/90 to-indigo-500/80 shadow-md shadow-indigo-500/10 z-0"
+                        transition={navPillTransition}
+                        initial={false}
+                      >
+                        <div className="absolute inset-0 rounded-full border border-indigo-300/20" />
+                      </motion.div>
+                    )}
+
+                    <motion.span
+                      layout="position"
+                      className="relative z-10 flex items-center gap-2"
+                      transition={{ layout: navPillTransition.layout }}
+                    >
+                      <Icon
+                        className={`w-4 h-4 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          isActive
+                            ? 'text-white'
+                            : 'text-zinc-400 group-hover:text-zinc-200'
+                        }`}
+                      />
+                      <span className="transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                        {link.label}
+                      </span>
+                    </motion.span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </LayoutGroup>
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center gap-4">
-
-
             <Link
               href="/jobs"
               className="group relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-full group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white text-white focus:ring-4 focus:outline-none focus:ring-blue-800"
@@ -154,28 +208,40 @@ export default function Navbar() {
               <GraduationCap className="w-4 h-4 text-cyan-400" />
             </Link>
           </div>
-          {navLinks.map((link) => {
-            const Icon = link.icon;
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all ${
-                  isActive
-                    ? 'text-white bg-indigo-500/20 border-l-4 border-indigo-500'
-                    : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-                }`}
-              >
-                <Icon className="w-5 h-5 text-indigo-400" />
-                {link.label}
-              </Link>
-            );
-          })}
+          <LayoutGroup id="mobile-nav">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive =
+                link.href === '/'
+                  ? pathname === '/'
+                  : pathname === link.href || pathname.startsWith(`${link.href}/`);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`relative flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    isActive
+                      ? 'text-white'
+                      : 'text-zinc-400 hover:text-white hover:bg-zinc-900/80'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="mobileNavActivePill"
+                      layout
+                      className="absolute inset-0 rounded-xl bg-indigo-500/20 border-l-4 border-indigo-500"
+                      transition={navPillTransition}
+                      initial={false}
+                    />
+                  )}
+                  <Icon className="relative z-10 w-5 h-5 text-indigo-400" />
+                  <span className="relative z-10">{link.label}</span>
+                </Link>
+              );
+            })}
+          </LayoutGroup>
           <div className="pt-4 pb-2 border-t border-zinc-900 px-4 flex flex-col gap-3">
-
-
             <Link
               href="/jobs"
               onClick={() => setIsOpen(false)}

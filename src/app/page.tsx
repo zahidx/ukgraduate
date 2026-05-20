@@ -1,14 +1,13 @@
-import React from 'react';
-import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import EventsNoticeDashboard from '@/components/EventsNoticeDashboard';
-import { 
-  ArrowRight, 
-  CheckCircle2,
-  Search,
-  ChevronDown
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
+import {
+    ArrowRight,
+    CheckCircle2,
+    ChevronDown,
+    Search
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -142,8 +141,8 @@ export default function Home() {
         <section className="relative z-10 border-y border-white/5 bg-zinc-900">
           <div className="grid grid-cols-1 md:grid-cols-3">
             {/* Column 1: Vibrant Teal block */}
-            <div className="group bg-[#00dfc8] text-zinc-950 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] transition-colors duration-500 ease-out hover:bg-[#00ebd3] z-10 cursor-default">
-              <div className="space-y-4 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
+            <div className="group stat-card bg-[#00dfc8] text-zinc-950 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] hover:bg-[#00ebd3] hover:shadow-2xl hover:shadow-[#00dfc8]/10 z-10 cursor-default">
+              <div className="space-y-4">
                 <span className="text-4xl sm:text-5xl font-black tracking-tighter block leading-none">
                   96% SUCCESS
                 </span>
@@ -154,16 +153,17 @@ export default function Home() {
                   Graduate placement, rotational scheme, or further academic specialization within 6 months of corporate matching.
                 </p>
               </div>
-              <div className="pt-8 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
-                <a href="/resources" className="inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider border-b-2 border-zinc-950 pb-0.5 hover:border-zinc-700 transition-colors">
-                  Explore Outcomes Report →
+              <div className="pt-8">
+                <a href="/resources" className="stat-card-cta inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider border-b-2 border-zinc-950 pb-0.5 group-hover:border-zinc-700">
+                  <span>Explore Outcomes Report</span>
+                  <span className="stat-card-cta-arrow">→</span>
                 </a>
               </div>
             </div>
 
             {/* Column 2: Vibrant Soft Gold/Yellow block */}
-            <div className="group bg-[#ffcc00] text-zinc-950 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] transition-colors duration-500 ease-out hover:bg-[#ffd633] z-10 cursor-default">
-              <div className="space-y-4 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
+            <div className="group stat-card bg-[#ffcc00] text-zinc-950 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] hover:bg-[#ffd633] hover:shadow-2xl hover:shadow-[#ffcc00]/10 z-10 cursor-default">
+              <div className="space-y-4">
                 <span className="text-4xl sm:text-5xl font-black tracking-tighter block leading-none">
                   £42,500 AVG
                 </span>
@@ -174,16 +174,17 @@ export default function Home() {
                   Average base salary recorded across our technology, finance, and system engineering schemes last term.
                 </p>
               </div>
-              <div className="pt-8 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
-                <a href="/resources" className="inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider border-b-2 border-zinc-950 pb-0.5 hover:border-zinc-700 transition-colors">
-                  Salary Benchmark Tool →
+              <div className="pt-8">
+                <a href="/resources" className="stat-card-cta inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider border-b-2 border-zinc-950 pb-0.5 group-hover:border-zinc-700">
+                  <span>Salary Benchmark Tool</span>
+                  <span className="stat-card-cta-arrow">→</span>
                 </a>
               </div>
             </div>
 
             {/* Column 3: Soft Dark Charcoal block */}
-            <div className="group bg-[#27272a] text-zinc-100 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] transition-colors duration-500 ease-out hover:bg-[#323236] z-10 cursor-default">
-              <div className="space-y-4 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
+            <div className="group stat-card bg-[#27272a] text-zinc-100 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] hover:bg-[#323236] hover:shadow-2xl hover:shadow-black/30 z-10 cursor-default">
+              <div className="space-y-4">
                 <span className="text-4xl sm:text-5xl font-black tracking-tighter block leading-none text-[#00dfc8]">
                   12,000+ ROLES
                 </span>
@@ -194,9 +195,10 @@ export default function Home() {
                   Verified entry-level vacancies, rotational programs, and corporate fast-track schemes currently open.
                 </p>
               </div>
-              <div className="pt-8 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
-                <Link href="/jobs" className="inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider text-[#00dfc8] border-b-2 border-[#00dfc8]/30 hover:border-[#00dfc8] pb-0.5 transition-colors">
-                  Search active vacancies →
+              <div className="pt-8">
+                <Link href="/jobs" className="stat-card-cta inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider text-[#00dfc8] border-b-2 border-[#00dfc8]/30 group-hover:border-[#00dfc8]">
+                  <span>Search active vacancies</span>
+                  <span className="stat-card-cta-arrow">→</span>
                 </Link>
               </div>
             </div>
@@ -251,7 +253,7 @@ export default function Home() {
               <img 
                 src="/images/incubator.png" 
                 alt="UKGraduate Startup Incubator london" 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover img-hover-zoom"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 to-transparent pointer-events-none" />
             </div>
@@ -308,7 +310,7 @@ export default function Home() {
               <img 
                 src="/images/mentorship.png" 
                 alt="Elite Business Mentorship Meeting" 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover img-hover-zoom"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 to-transparent pointer-events-none" />
             </div>
@@ -321,7 +323,7 @@ export default function Home() {
               <img 
                 src="/images/techtrek.png" 
                 alt="International technology consulting trek Singapore" 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover img-hover-zoom"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 to-transparent pointer-events-none" />
             </div>
@@ -479,8 +481,8 @@ export default function Home() {
               {/* News 1 */}
               <div className="space-y-4 group cursor-pointer">
                 <div className="relative aspect-[16/10] bg-zinc-800 rounded-2xl overflow-hidden border border-white/5">
-                  <img src="/images/news_alliance.png" alt="Alliance News" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/40 via-transparent to-zinc-950/80 pointer-events-none transition-opacity duration-500 group-hover:opacity-80" />
+                  <img src="/images/news_alliance.png" alt="Alliance News" className="absolute inset-0 w-full h-full object-cover img-hover-zoom" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/40 via-transparent to-zinc-950/80 pointer-events-none img-hover-overlay" />
                   <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded text-[9px] font-black uppercase tracking-wider text-[#00dfc8] border border-white/5 z-10">
                     ALLIANCE NEWS
                   </div>
@@ -499,8 +501,8 @@ export default function Home() {
               {/* News 2 */}
               <div className="space-y-4 group cursor-pointer">
                 <div className="relative aspect-[16/10] bg-zinc-800 rounded-2xl overflow-hidden border border-white/5">
-                  <img src="/images/news_awards.png" alt="Awards & Honours" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/40 via-transparent to-zinc-950/80 pointer-events-none transition-opacity duration-500 group-hover:opacity-80" />
+                  <img src="/images/news_awards.png" alt="Awards & Honours" className="absolute inset-0 w-full h-full object-cover img-hover-zoom" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/40 via-transparent to-zinc-950/80 pointer-events-none img-hover-overlay" />
                   <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded text-[9px] font-black uppercase tracking-wider text-[#ffcc00] border border-white/5 z-10">
                     AWARDS & HONOURS
                   </div>
@@ -519,8 +521,8 @@ export default function Home() {
               {/* News 3 */}
               <div className="space-y-4 group cursor-pointer">
                 <div className="relative aspect-[16/10] bg-zinc-800 rounded-2xl overflow-hidden border border-white/5">
-                  <img src="/images/news_vacancy.png" alt="Vacancy Announcement" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/40 via-transparent to-zinc-950/80 pointer-events-none transition-opacity duration-500 group-hover:opacity-80" />
+                  <img src="/images/news_vacancy.png" alt="Vacancy Announcement" className="absolute inset-0 w-full h-full object-cover img-hover-zoom" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/40 via-transparent to-zinc-950/80 pointer-events-none img-hover-overlay" />
                   <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded text-[9px] font-black uppercase tracking-wider text-purple-400 border border-white/5 z-10">
                     VACANCY ANNOUNCEMENT
                   </div>

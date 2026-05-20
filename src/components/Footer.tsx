@@ -137,19 +137,19 @@ export default function Footer() {
               <div className="text-xs sm:text-sm text-zinc-400 font-semibold">
                 <span className="text-zinc-500 font-bold block mb-1">Direct Inquiries:</span>
                 <a 
-                  href="tel:+442079460192" 
+                  href="tel:+442036090260" 
                   className="text-white hover:text-[#00dfc8] transition-colors border-b border-white/10 hover:border-[#00dfc8]/50 font-black pb-0.5 tracking-wide text-sm"
                 >
-                  +44 20 7946 0192
+                  (+44) 0203 609 0260
                 </a>
               </div>
               <div className="text-xs sm:text-sm text-zinc-400 font-semibold">
-                <span className="text-zinc-500 font-bold block mb-1">Email Support:</span>
+                <span className="text-zinc-500 font-bold block mb-1">Email:</span>
                 <a 
-                  href="mailto:support@ukgraduate.com" 
+                  href="mailto:info@ukgraduate.org.uk" 
                   className="text-white hover:text-[#00dfc8] transition-colors border-b border-white/10 hover:border-[#00dfc8]/50 font-black pb-0.5 tracking-wide text-sm"
                 >
-                  support@ukgraduate.com
+                  info@ukgraduate.org.uk
                 </a>
               </div>
             </div>
