@@ -98,16 +98,19 @@ export default function Footer() {
               <p className="text-xs text-zinc-400 mb-4 font-medium">
                 Get notified instantly when premium FTSE 100 graduate schemes go live.
               </p>
-              <form onSubmit={handleSubscribe} className="flex gap-2">
-                <input 
-                  type="email" 
+              <form
+                onSubmit={handleSubscribe}
+                className="footer-newsletter-form grid grid-cols-1 gap-2 lg:grid-cols-[minmax(0,1fr)_auto]"
+              >
+                <input
+                  type="email"
                   required
-                  placeholder="Enter your email address" 
-                  className="flex-grow h-11 bg-zinc-950/70 border border-white/10 focus:border-[#00dfc8]/60 focus:ring-2 focus:ring-[#00dfc8]/10 text-white rounded-xl px-4 text-xs font-semibold placeholder:text-zinc-500 outline-none transition-all"
+                  placeholder="Enter your email address"
+                  className="w-full min-w-0 h-11 bg-zinc-950/70 border border-white/10 focus:border-[#00dfc8]/60 focus:ring-2 focus:ring-[#00dfc8]/10 text-white rounded-xl px-4 text-xs font-semibold placeholder:text-zinc-500 outline-none transition-all"
                 />
-                <button 
-                  type="submit" 
-                  className="h-11 px-5 bg-gradient-to-r from-[#00dfc8] to-[#00bda9] text-zinc-950 font-black text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(0,223,200,0.3)] transition-all active:scale-95 duration-200 cursor-pointer"
+                <button
+                  type="submit"
+                  className="w-full lg:w-auto h-11 px-5 justify-self-stretch lg:justify-self-auto bg-gradient-to-r from-[#00dfc8] to-[#00bda9] text-zinc-950 font-black text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(0,223,200,0.3)] transition-all active:scale-95 duration-200 cursor-pointer"
                 >
                   Subscribe
                 </button>

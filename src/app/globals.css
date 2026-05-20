@@ -144,6 +144,18 @@ body {
   transition: transform 10s cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
 
+/* Footer newsletter — stack button under input on mobile/tablet */
+@media (max-width: 1023px) {
+  .footer-newsletter-form {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .footer-newsletter-form button[type='submit'] {
+    width: 100% !important;
+  }
+}
+
 /* Hide scrollbar for standard sleek styling */
 ::-webkit-scrollbar {
   width: 8px;
