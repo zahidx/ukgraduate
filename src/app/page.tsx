@@ -2,9 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import EventsNoticeDashboard from '@/components/EventsNoticeDashboard';
 import { 
   ArrowRight, 
-  CheckCircle2
+  CheckCircle2,
+  Search,
+  ChevronDown
 } from 'lucide-react';
 
 export default function Home() {
@@ -80,12 +83,67 @@ export default function Home() {
           <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-indigo-500/5 blur-3xl -z-10 pointer-events-none" />
         </section>
 
+        {/* Course Search Bar Section */}
+        <section className="relative z-20 -mt-10 sm:-mt-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-10">
+          <div className="glass-panel p-6 sm:p-8 rounded-3xl shadow-2xl shadow-black/40 border border-white/10 relative overflow-hidden backdrop-blur-xl bg-zinc-900/80">
+            {/* Subtle glow behind the search bar */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00dfc8]/5 via-transparent to-purple-500/5 pointer-events-none" />
+            
+            <h3 className="text-xl sm:text-2xl font-black text-white mb-6 relative z-10 tracking-tight">
+              Find the course that's right for you:
+            </h3>
+            
+            <form className="flex flex-col md:flex-row gap-4 relative z-10">
+              {/* Select Course Type */}
+              <div className="flex-1 min-w-[200px] lg:min-w-[240px]">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">
+                  Select course type
+                </label>
+                <div className="relative">
+                  <select className="w-full h-[56px] appearance-none bg-[#fce7f3] text-zinc-950 font-bold px-5 rounded-xl border border-transparent focus:outline-none focus:ring-4 focus:ring-[#fce7f3]/30 transition-all cursor-pointer shadow-inner">
+                    <option value="" className="bg-white text-zinc-950">Undergraduate</option>
+                    <option value="postgrad" className="bg-white text-zinc-950">Postgraduate</option>
+                    <option value="short" className="bg-white text-zinc-950">Short Courses</option>
+                    <option value="apprenticeship" className="bg-white text-zinc-950">Degree Apprenticeships</option>
+                  </select>
+                  <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-950 pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Keyword Search */}
+              <div className="flex-[2]">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">
+                  Enter course, subject or keyword
+                </label>
+                <div className="relative flex items-center">
+                  <input 
+                    type="text" 
+                    placeholder="e.g. Computer Science, Business Management..." 
+                    className="w-full h-[56px] bg-white text-zinc-950 px-5 rounded-xl border border-transparent focus:outline-none focus:ring-4 focus:ring-white/30 transition-all placeholder:text-zinc-500 font-semibold shadow-inner"
+                  />
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <div className="flex items-end">
+                <button 
+                  type="button" 
+                  className="w-full md:w-auto h-[56px] flex items-center justify-center gap-2 px-8 bg-[#00dfc8] hover:bg-[#00c4b0] text-zinc-950 font-black uppercase tracking-wider text-sm rounded-xl shadow-lg shadow-[#00dfc8]/20 hover:shadow-[#00dfc8]/40 transition-all active:scale-95"
+                >
+                  <span>Search Courses</span>
+                  <Search className="w-4 h-4 stroke-[3px]" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
         {/* Section 1: The UEL-Inspired 3-Column Bold Statistics Banner */}
         <section className="relative z-10 border-y border-white/5 bg-zinc-900">
           <div className="grid grid-cols-1 md:grid-cols-3">
             {/* Column 1: Vibrant Teal block */}
-            <div className="bg-[#00dfc8] text-zinc-950 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl z-10">
-              <div className="space-y-4">
+            <div className="group bg-[#00dfc8] text-zinc-950 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] transition-colors duration-500 ease-out hover:bg-[#00ebd3] z-10 cursor-default">
+              <div className="space-y-4 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
                 <span className="text-4xl sm:text-5xl font-black tracking-tighter block leading-none">
                   96% SUCCESS
                 </span>
@@ -96,16 +154,16 @@ export default function Home() {
                   Graduate placement, rotational scheme, or further academic specialization within 6 months of corporate matching.
                 </p>
               </div>
-              <div className="pt-8">
-                <a href="/resources" className="inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider border-b-2 border-zinc-950 pb-0.5 hover:border-zinc-900 transition-colors">
+              <div className="pt-8 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
+                <a href="/resources" className="inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider border-b-2 border-zinc-950 pb-0.5 hover:border-zinc-700 transition-colors">
                   Explore Outcomes Report →
                 </a>
               </div>
             </div>
 
             {/* Column 2: Vibrant Soft Gold/Yellow block */}
-            <div className="bg-[#ffcc00] text-zinc-950 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl z-10">
-              <div className="space-y-4">
+            <div className="group bg-[#ffcc00] text-zinc-950 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] transition-colors duration-500 ease-out hover:bg-[#ffd633] z-10 cursor-default">
+              <div className="space-y-4 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
                 <span className="text-4xl sm:text-5xl font-black tracking-tighter block leading-none">
                   £42,500 AVG
                 </span>
@@ -116,16 +174,16 @@ export default function Home() {
                   Average base salary recorded across our technology, finance, and system engineering schemes last term.
                 </p>
               </div>
-              <div className="pt-8">
-                <a href="/resources" className="inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider border-b-2 border-zinc-950 pb-0.5 hover:border-zinc-900 transition-colors">
+              <div className="pt-8 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
+                <a href="/resources" className="inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider border-b-2 border-zinc-950 pb-0.5 hover:border-zinc-700 transition-colors">
                   Salary Benchmark Tool →
                 </a>
               </div>
             </div>
 
             {/* Column 3: Soft Dark Charcoal block */}
-            <div className="bg-[#27272a] text-zinc-100 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl z-10">
-              <div className="space-y-4">
+            <div className="group bg-[#27272a] text-zinc-100 p-12 lg:p-16 flex flex-col justify-between min-h-[320px] transition-colors duration-500 ease-out hover:bg-[#323236] z-10 cursor-default">
+              <div className="space-y-4 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
                 <span className="text-4xl sm:text-5xl font-black tracking-tighter block leading-none text-[#00dfc8]">
                   12,000+ ROLES
                 </span>
@@ -136,7 +194,7 @@ export default function Home() {
                   Verified entry-level vacancies, rotational programs, and corporate fast-track schemes currently open.
                 </p>
               </div>
-              <div className="pt-8">
+              <div className="pt-8 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-1 group-hover:translate-x-1">
                 <Link href="/jobs" className="inline-flex items-center gap-2 font-black text-sm uppercase tracking-wider text-[#00dfc8] border-b-2 border-[#00dfc8]/30 hover:border-[#00dfc8] pb-0.5 transition-colors">
                   Search active vacancies →
                 </Link>
@@ -144,6 +202,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Section 1.2: Events & Notices Dashboard */}
+        <EventsNoticeDashboard />
 
         {/* Section 1.5: UEL-Inspired Interactive Pathway & Scheme Finder */}
         <section className="py-12 bg-zinc-800/40 border-b border-white/5 relative overflow-hidden">
@@ -418,8 +479,9 @@ export default function Home() {
               {/* News 1 */}
               <div className="space-y-4 group cursor-pointer">
                 <div className="relative aspect-[16/10] bg-zinc-800 rounded-2xl overflow-hidden border border-white/5">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-transparent group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded text-[9px] font-black uppercase tracking-wider text-[#00dfc8] border border-white/5">
+                  <img src="/images/news_alliance.png" alt="Alliance News" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/40 via-transparent to-zinc-950/80 pointer-events-none transition-opacity duration-500 group-hover:opacity-80" />
+                  <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded text-[9px] font-black uppercase tracking-wider text-[#00dfc8] border border-white/5 z-10">
                     ALLIANCE NEWS
                   </div>
                 </div>
@@ -437,8 +499,9 @@ export default function Home() {
               {/* News 2 */}
               <div className="space-y-4 group cursor-pointer">
                 <div className="relative aspect-[16/10] bg-zinc-800 rounded-2xl overflow-hidden border border-white/5">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded text-[9px] font-black uppercase tracking-wider text-[#ffcc00] border border-white/5">
+                  <img src="/images/news_awards.png" alt="Awards & Honours" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/40 via-transparent to-zinc-950/80 pointer-events-none transition-opacity duration-500 group-hover:opacity-80" />
+                  <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded text-[9px] font-black uppercase tracking-wider text-[#ffcc00] border border-white/5 z-10">
                     AWARDS & HONOURS
                   </div>
                 </div>
@@ -456,8 +519,9 @@ export default function Home() {
               {/* News 3 */}
               <div className="space-y-4 group cursor-pointer">
                 <div className="relative aspect-[16/10] bg-zinc-800 rounded-2xl overflow-hidden border border-white/5">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-transparent group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded text-[9px] font-black uppercase tracking-wider text-purple-400 border border-white/5">
+                  <img src="/images/news_vacancy.png" alt="Vacancy Announcement" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/40 via-transparent to-zinc-950/80 pointer-events-none transition-opacity duration-500 group-hover:opacity-80" />
+                  <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md px-3 py-1 rounded text-[9px] font-black uppercase tracking-wider text-purple-400 border border-white/5 z-10">
                     VACANCY ANNOUNCEMENT
                   </div>
                 </div>

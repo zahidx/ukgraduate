@@ -41,17 +41,17 @@ export default function Navbar() {
             <div className="flex items-center divide-x divide-white/5 border-l border-r border-white/5 h-full">
               <Link 
                 href="/staff-login" 
-                className="flex items-center gap-2 px-5 h-full text-xs font-bold tracking-wider text-zinc-100 hover:text-white hover:bg-white/5 transition-all"
+                className="flex items-center gap-2 px-5 h-full text-sm font-bold tracking-wider text-zinc-100 hover:text-white hover:bg-white/5 transition-all"
               >
                 <span>Staff login</span>
-                <Briefcase className="w-3.5 h-3.5 text-zinc-400" />
+                <Briefcase className="w-4 h-4 text-zinc-400" />
               </Link>
               <Link 
                 href="/student-login" 
-                className="flex items-center gap-2 px-5 h-full text-xs font-bold tracking-wider text-zinc-100 hover:text-white hover:bg-white/5 transition-all"
+                className="flex items-center gap-2 px-5 h-full text-sm font-bold tracking-wider text-zinc-100 hover:text-white hover:bg-white/5 transition-all"
               >
                 <span>Student login</span>
-                <GraduationCap className="w-3.5 h-3.5 text-zinc-400" />
+                <GraduationCap className="w-4 h-4 text-zinc-400" />
               </Link>
             </div>
           </div>
@@ -66,7 +66,7 @@ export default function Navbar() {
               <img 
                 src="/images/project.png" 
                 alt="UKGraduate Logo" 
-                className="h-20 md:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+                className="h-24 md:h-20 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
               />
             </Link>
           </div>
@@ -140,18 +140,18 @@ export default function Navbar() {
             <Link
               href="/staff-login"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-white/5 border border-white/5 text-xs font-bold text-zinc-300 hover:text-white transition-all"
+              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-white/5 border border-white/5 text-sm font-bold text-zinc-300 hover:text-white transition-all"
             >
               Staff login
-              <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
+              <Briefcase className="w-4 h-4 text-indigo-400" />
             </Link>
             <Link
               href="/student-login"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-white/5 border border-white/5 text-xs font-bold text-zinc-300 hover:text-white transition-all"
+              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-white/5 border border-white/5 text-sm font-bold text-zinc-300 hover:text-white transition-all"
             >
               Student login
-              <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
+              <GraduationCap className="w-4 h-4 text-cyan-400" />
             </Link>
           </div>
           {navLinks.map((link) => {
