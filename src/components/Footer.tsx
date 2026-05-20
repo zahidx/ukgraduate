@@ -40,11 +40,6 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-const TiktokIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-  </svg>
-);
 
 const ArrowUpIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -64,7 +59,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-zinc-950 border-t border-white/5 py-20 mt-auto overflow-hidden text-zinc-300">
+    <footer className="relative bg-gradient-to-b from-zinc-950 via-zinc-950 to-[#0e0c1a] border-t border-white/5 py-20 mt-auto overflow-hidden text-zinc-300">
       {/* Decorative Atmospheric Glows for Premium Aesthetic */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-[130px] pointer-events-none" />
       <div className="absolute bottom-0 left-12 w-[400px] h-[400px] rounded-full bg-purple-500/5 blur-[120px] pointer-events-none" />
@@ -360,15 +355,6 @@ export default function Footer() {
                 aria-label="Instagram"
               >
                 <InstagramIcon className="w-4.5 h-4.5 fill-none" />
-              </a>
-              <a 
-                href="https://tiktok.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/5 bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-[#00f2fe]/10 hover:border-[#00f2fe]/40 hover:text-[#00f2fe] hover:scale-110 hover:shadow-[0_0_15px_rgba(0,242,254,0.2)] transition-all duration-300"
-                aria-label="TikTok"
-              >
-                <TiktokIcon className="w-5 h-5 fill-none" />
               </a>
             </div>
           </div>
