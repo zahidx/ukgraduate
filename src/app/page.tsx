@@ -587,19 +587,136 @@ export default function Home() {
         </section>
 
         {/* Section 4: Accreditations Alliance trust badge ribbon */}
-        <section className="py-12 bg-zinc-900 border-b border-white/5 select-none">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block">
-              PARTNERED WITH LEADERS IN BRITISH INDUSTRY & EDUCATION
-            </span>
+        <section className="py-20 bg-zinc-950 border-b border-white/5 relative overflow-hidden select-none">
+          {/* Subtle Ambient Radial Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[150px] rounded-full bg-cyan-500/5 blur-[120px] pointer-events-none" />
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10 relative z-10">
+            <div className="space-y-3">
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-cyan-400 bg-cyan-400/5 border border-cyan-400/20 px-3 py-1 rounded-full inline-block">
+                Trusted Academic & Industry Partners
+              </span>
+              <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight">
+                Partnered with Leaders in British Industry & Education
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto font-medium leading-relaxed">
+                Syncing directly with elite corporate recruiters, research initiatives, and higher education leaders to power seamless graduate career pathways.
+              </p>
+            </div>
+
+            {/* Custom CSS for seamless infinite loop marquee */}
+            <style>{`
+              @keyframes marquee {
+                0% { transform: translateX(0%); }
+                100% { transform: translateX(-50%); }
+              }
+              .animate-marquee {
+                display: flex;
+                width: max-content;
+                animation: marquee 30s linear infinite;
+              }
+              .animate-marquee:hover {
+                animation-play-state: paused;
+              }
+            `}</style>
+
+            {/* Infinite Loop Marquee Container */}
+            <div className="relative w-full overflow-hidden py-4">
+              {/* Fade masks for smooth edges */}
+              <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
+              
+              <div className="animate-marquee flex gap-12 sm:gap-20 items-center">
+                {/* First Set of Logos */}
+                <div className="flex gap-12 sm:gap-20 items-center">
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-cyan-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> TECH NATION UK
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-purple-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400" /> CDA ALLIANCE
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-pink-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-pink-400" /> NESTA INNOVATE
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-blue-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" /> HESA INSIGHTS
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-yellow-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" /> GRADUATE OUTCOMES
+                  </span>
+                  
+                  {/* Universities in the marquee */}
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-indigo-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" /> IMPERIAL LONDON
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-emerald-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> UNIVERSITY COLLEGE LONDON
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-rose-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400" /> MANCHESTER ALLIANCE
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-teal-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400" /> BRISTOL PLACEMENTS
+                  </span>
+                </div>
+
+                {/* Second Duplicate Set for Infinite Scroll */}
+                <div className="flex gap-12 sm:gap-20 items-center">
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-cyan-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> TECH NATION UK
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-purple-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400" /> CDA ALLIANCE
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-pink-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-pink-400" /> NESTA INNOVATE
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-blue-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" /> HESA INSIGHTS
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-yellow-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" /> GRADUATE OUTCOMES
+                  </span>
+                  
+                  {/* Universities in the marquee */}
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-indigo-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" /> IMPERIAL LONDON
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-emerald-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> UNIVERSITY COLLEGE LONDON
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-rose-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400" /> MANCHESTER ALLIANCE
+                  </span>
+                  <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-500 hover:text-teal-400 transition-colors cursor-pointer flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400" /> BRISTOL PLACEMENTS
+                  </span>
+                </div>
+              </div>
+            </div>
             
-            {/* Grid of trust badges */}
-            <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16 opacity-30">
-              <span className="text-base sm:text-lg font-black tracking-tighter text-white">TECH NATION UK</span>
-              <span className="text-base sm:text-lg font-black tracking-tighter text-white">CDA ALLIANCE</span>
-              <span className="text-base sm:text-lg font-black tracking-tighter text-white">NESTA INNOVATE</span>
-              <span className="text-base sm:text-lg font-black tracking-tighter text-white">HESA INSIGHTS</span>
-              <span className="text-base sm:text-lg font-black tracking-tighter text-white">GRADUATE OUTCOMES</span>
+            {/* Grid of Verified Badges/Cards below the marquee */}
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 pt-4">
+              <div className="glass-panel p-4 rounded-2xl border border-white/5 bg-zinc-900/40 hover:border-cyan-500/25 transition-all duration-300">
+                <span className="text-[10px] font-extrabold text-[#00dfc8] uppercase tracking-wider block">TECH NATION</span>
+                <span className="text-[9px] text-zinc-500 font-semibold mt-1 block">Accredited Member</span>
+              </div>
+              <div className="glass-panel p-4 rounded-2xl border border-white/5 bg-zinc-900/40 hover:border-purple-500/25 transition-all duration-300">
+                <span className="text-[10px] font-extrabold text-purple-400 uppercase tracking-wider block">CDA ALLIANCE</span>
+                <span className="text-[9px] text-zinc-500 font-semibold mt-1 block">Founding Member</span>
+              </div>
+              <div className="glass-panel p-4 rounded-2xl border border-white/5 bg-zinc-900/40 hover:border-pink-500/25 transition-all duration-300">
+                <span className="text-[10px] font-extrabold text-pink-400 uppercase tracking-wider block">NESTA UK</span>
+                <span className="text-[9px] text-zinc-500 font-semibold mt-1 block">Innovation Hub</span>
+              </div>
+              <div className="glass-panel p-4 rounded-2xl border border-white/5 bg-zinc-900/40 hover:border-blue-500/25 transition-all duration-300">
+                <span className="text-[10px] font-extrabold text-blue-400 uppercase tracking-wider block">HESA INSIGHTS</span>
+                <span className="text-[9px] text-zinc-500 font-semibold mt-1 block">Metrics Sync</span>
+              </div>
+              <div className="glass-panel p-4 rounded-2xl border border-white/5 bg-zinc-900/40 hover:border-yellow-500/25 transition-all duration-300 col-span-2 sm:col-span-1">
+                <span className="text-[10px] font-extrabold text-yellow-400 uppercase tracking-wider block">GRADUATE HUB</span>
+                <span className="text-[9px] text-zinc-500 font-semibold mt-1 block">Outcomes Verified</span>
+              </div>
             </div>
           </div>
         </section>
