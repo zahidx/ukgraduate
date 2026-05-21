@@ -190,7 +190,7 @@ export default function Footer() {
         {/* Bottom Strip */}
         <div className="mt-20 flex flex-col xl:flex-row items-start xl:items-end gap-12 text-[14px] font-normal text-white/90 tracking-wide">
           <p className="max-w-[200px] leading-relaxed">
-            Copyright @2026 University of East London
+            Copyright @2026 UK Graduate College
           </p>
           
           <div className="flex flex-col gap-5 flex-1 w-full xl:ml-12">
