@@ -1,254 +1,193 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Briefcase, GraduationCap, FileText, Menu, X, ArrowRight, Compass } from 'lucide-react';
-import { motion, LayoutGroup } from 'framer-motion';
+import { Briefcase, GraduationCap, Search, Menu, X, ChevronDown, Building2, Target, HeartHandshake, Award } from 'lucide-react';
 
-/** Shared layout animation — slow, smooth slide between nav items */
-const navPillTransition = {
-  layout: {
-    duration: 0.65,
-    ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-  },
-  type: 'spring' as const,
-  stiffness: 120,
-  damping: 24,
-  mass: 1.1,
-};
-
-const navLinks = [
-  { href: '/', label: 'Home', icon: Compass },
-  { href: '/jobs', label: 'Graduate Jobs', icon: Briefcase },
-  { href: '/universities', label: 'Universities', icon: GraduationCap },
-  { href: '/resources', label: 'Resources', icon: FileText },
+const mainNavLinks = [
+  { href: '/resources', label: 'Resources' },
+  { href: '/courses', label: 'Courses/Programs' },
+  { href: '/campus', label: 'Campus' },
+  { href: '/about', label: 'About Us' },
+  { href: '/contact', label: 'Contact Us' },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? 'glass-nav shadow-lg shadow-black/10'
-          : 'bg-transparent border-b border-transparent'
-      }`}
-    >
-      {/* Top Utility Bar with Staff/Student Logins */}
-      <div className={`border-b border-white/5 bg-zinc-900/40 hidden md:block transition-all duration-300 ease-in-out overflow-hidden ${scrolled ? 'max-h-0 border-b-0 opacity-0' : 'max-h-10 opacity-100'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-end h-10">
-            <div className="flex items-center divide-x divide-white/5 border-l border-r border-white/5 h-full">
-              <Link 
-                href="/staff-login" 
-                className="flex items-center gap-2 px-5 h-full text-sm font-bold tracking-wider text-zinc-100 hover:text-white hover:bg-white/5 transition-all"
-              >
-                <span>Staff login</span>
-                <Briefcase className="w-4 h-4 text-zinc-400" />
-              </Link>
-              <Link 
-                href="/student-login" 
-                className="flex items-center gap-2 px-5 h-full text-sm font-bold tracking-wider text-zinc-100 hover:text-white hover:bg-white/5 transition-all"
-              >
-                <span>Student login</span>
-                <GraduationCap className="w-4 h-4 text-zinc-400" />
-              </Link>
-            </div>
+    <header className="w-full bg-[#2c2c2c] text-white font-sans z-50 relative">
+      {/* Top Utility Bar */}
+      <div className="hidden lg:block w-full">
+        <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-end h-[48px]">
+            <Link 
+              href="/staff-login" 
+              className="flex items-center gap-2 px-6 text-[15px] font-bold text-white hover:text-[#00D8C5] transition-colors border-l border-[#4a4a4a]"
+            >
+              Staff login
+              <Briefcase className="w-4 h-4" />
+            </Link>
+            <Link 
+              href="/student-login" 
+              className="flex items-center gap-2 px-6 text-[15px] font-bold text-white hover:text-[#00D8C5] transition-colors border-l border-r border-[#4a4a4a]"
+            >
+              Student login
+              <GraduationCap className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </div>
 
-      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300 ${scrolled ? 'py-2.5' : 'py-4'}`}>
-        <div className="flex items-center justify-between h-14">
-          {/* Logo */}
+      {/* Main Navigation */}
+      <div className="max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between py-4 lg:py-2">
+          
+          {/* Logo - Kept original logo reference */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center group">
+            <Link href="/" className="flex items-center">
               <img 
                 src="/images/project.png" 
                 alt="UKGraduate Logo" 
-                className="h-24 md:h-20 w-auto object-contain img-hover-zoom img-hover-zoom--subtle"
+                className="h-24 md:h-24 w-auto object-contain"
               />
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <LayoutGroup id="main-nav">
-            <nav className="relative hidden md:flex items-center gap-1 bg-zinc-900/50 p-1.5 rounded-full border border-white/5 backdrop-blur-md">
-              {navLinks.map((link, index) => {
-                const Icon = link.icon;
-                const isActive =
-                  link.href === '/'
-                    ? pathname === '/'
-                    : pathname === link.href || pathname.startsWith(`${link.href}/`);
-                const isHovered = hoveredIndex === index;
-                const showHoverPill = isHovered && !isActive;
+          {/* Desktop Links */}
+          <nav className="hidden lg:flex items-center">
+            <div className="flex items-center gap-8 mr-10 relative">
+              {mainNavLinks.map((link) => {
+                const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+                const isAbout = link.label === 'About Us';
 
                 return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    className={`group relative z-10 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium tracking-wide select-none transition-[color,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-px ${
-                      isActive ? 'text-white' : 'text-zinc-400 hover:text-white'
-                    }`}
-                  >
-                    {/* Hover pill — slides between items; hidden on active item */}
-                    {showHoverPill && (
-                      <motion.div
-                        layoutId="navHoverPill"
-                        layout
-                        className="absolute inset-0 rounded-full bg-white/[0.07] z-0"
-                        transition={navPillTransition}
-                        initial={false}
-                      />
-                    )}
-
-                    {/* Active pill — slides smoothly on route change */}
-                    {isActive && (
-                      <motion.div
-                        layoutId="navActivePill"
-                        layout
-                        className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-600/90 to-indigo-500/80 shadow-md shadow-indigo-500/10 z-0"
-                        transition={navPillTransition}
-                        initial={false}
-                      >
-                        <div className="absolute inset-0 rounded-full border border-indigo-300/20" />
-                      </motion.div>
-                    )}
-
-                    <motion.span
-                      layout="position"
-                      className="relative z-10 flex items-center gap-2"
-                      transition={{ layout: navPillTransition.layout }}
+                  <div key={link.href} className="relative group">
+                    <Link
+                      href={link.href}
+                      className={`relative py-1 text-[18px] font-bold tracking-[0.02em] transition-colors flex items-center gap-1.5 ${
+                        isActive ? 'text-[#00D8C5]' : 'text-white'
+                      } after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:-bottom-1 after:left-0 after:bg-white after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out group-hover:after:scale-x-100 group-hover:after:origin-bottom-left`}
                     >
-                      <Icon
-                        className={`w-4 h-4 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                          isActive
-                            ? 'text-white'
-                            : 'text-zinc-400 group-hover:text-zinc-200'
-                        }`}
-                      />
-                      <span className="transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
-                        {link.label}
-                      </span>
-                    </motion.span>
-                  </Link>
+                      {link.label}
+                      {isAbout && <ChevronDown className="w-4 h-4 mt-0.5 transition-transform duration-300 group-hover:rotate-180" />}
+                    </Link>
+
+                    {/* About Us Dropdown */}
+                    {isAbout && (
+                      <div className="absolute left-1/2 -translate-x-1/2 pt-6 w-[360px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-50">
+                        <div className="bg-[#f8fafc] rounded-2xl shadow-2xl border border-zinc-200 overflow-hidden">
+                          <div className="p-3">
+                            <Link href="/about" className="flex items-center gap-4 p-3 rounded-xl hover:bg-white transition-colors group/item">
+                              <div className="w-[52px] h-[52px] rounded-2xl bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover/item:shadow-md transition-all border border-zinc-100">
+                                <Building2 className="w-6 h-6 text-[#0E2A47]" />
+                              </div>
+                              <span className="text-[#0E2A47] font-medium text-[16px]">About Us</span>
+                            </Link>
+                            
+                            <Link href="/about/mission" className="flex items-center gap-4 p-3 rounded-xl hover:bg-white transition-colors group/item">
+                              <div className="w-[52px] h-[52px] rounded-2xl bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover/item:shadow-md transition-all border border-zinc-100">
+                                <Target className="w-6 h-6 text-[#0E2A47]" />
+                              </div>
+                              <span className="text-[#0E2A47] font-medium text-[16px]">Our Mission & Vision</span>
+                            </Link>
+
+                            <Link href="/about/values" className="flex items-center gap-4 p-3 rounded-xl hover:bg-white transition-colors group/item">
+                              <div className="w-[52px] h-[52px] rounded-2xl bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover/item:shadow-md transition-all border border-zinc-100">
+                                <HeartHandshake className="w-6 h-6 text-[#0E2A47]" />
+                              </div>
+                              <span className="text-[#0E2A47] font-medium text-[16px] leading-tight">Our Values & Social<br/>Responsibility</span>
+                            </Link>
+
+                            <Link href="/about/accreditations" className="flex items-center gap-4 p-3 rounded-xl hover:bg-white transition-colors group/item">
+                              <div className="w-[52px] h-[52px] rounded-2xl bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover/item:shadow-md transition-all border border-zinc-100">
+                                <Award className="w-6 h-6 text-[#0E2A47]" />
+                              </div>
+                              <span className="text-[#0E2A47] font-medium text-[16px]">Accreditations</span>
+                            </Link>
+                          </div>
+                          
+                          <div className="bg-[#f1f5f9] p-6 border-t border-zinc-200">
+                            <h4 className="text-[#4A5568] font-medium mb-4 text-[16px]">Documentation</h4>
+                            <div className="flex flex-col gap-3">
+                              <Link href="/about/policies" className="text-[#7c3aed] hover:text-[#6d28d9] font-medium text-[15px]">Policies</Link>
+                              <Link href="/about/qip" className="text-[#7c3aed] hover:text-[#6d28d9] font-medium text-[15px]">QIP</Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 );
               })}
-            </nav>
-          </LayoutGroup>
+            </div>
 
-          {/* Action Buttons */}
-          <div className="hidden md:flex items-center gap-4">
-            <Link
-              href="/jobs"
-              className="group relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-full group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white text-white focus:ring-4 focus:outline-none focus:ring-blue-800"
+            {/* Search Button */}
+            <button 
+              className="w-[50px] h-[50px] bg-[#4A4A4A] hover:bg-[#5A5A5A] flex items-center justify-center transition-colors rounded-[2px]"
+              aria-label="Search"
             >
-              <span className="relative flex items-center gap-1.5 px-5 py-2 transition-all ease-in duration-75 bg-zinc-900 rounded-full group-hover:bg-opacity-0">
-                Explore Schemes
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 duration-200" />
-              </span>
-            </Link>
-          </div>
+              <Search className="w-6 h-6 text-white" />
+            </button>
+          </nav>
 
-          {/* Mobile menu button */}
-          <div className="flex md:hidden">
+          {/* Mobile Controls */}
+          <div className="flex lg:hidden items-center gap-4 pb-2">
+            <button 
+              className="w-10 h-10 bg-[#4A4A4A] flex items-center justify-center rounded-[2px]"
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5 text-white" />
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              aria-controls="mobile-menu"
-              aria-expanded={isOpen}
+              className="p-1 text-white hover:text-[#00D8C5] transition-colors"
+              aria-label="Menu"
             >
-              <span className="sr-only">Open main menu</span>
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Dropdown */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out bg-[#2c2c2c] ${
+          isOpen ? 'max-h-[600px] border-t border-[#4a4a4a]' : 'max-h-0'
         }`}
-        id="mobile-menu"
       >
-        <div className="px-2 pt-2 pb-4 space-y-1 bg-zinc-900/95 border-b border-white/5 backdrop-blur-lg">
-          {/* Staff & Student login buttons inside mobile menu drawer */}
-          <div className="grid grid-cols-2 gap-2 p-2 border-b border-zinc-900 mb-2">
+        <div className="px-4 py-2 space-y-1">
+          {mainNavLinks.map((link) => {
+            const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={`block px-3 py-4 text-base font-bold border-b border-[#3a3a3a] transition-colors ${
+                  isActive ? 'text-[#00D8C5]' : 'text-white hover:text-[#00D8C5]'
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+          <div className="grid grid-cols-2 gap-4 py-6">
             <Link
               href="/staff-login"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-white/5 border border-white/5 text-sm font-bold text-zinc-300 hover:text-white transition-all"
+              className="flex items-center justify-center gap-2 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-sm font-bold text-white rounded transition-colors"
             >
-              Staff login
-              <Briefcase className="w-4 h-4 text-indigo-400" />
+              Staff login <Briefcase className="w-4 h-4" />
             </Link>
             <Link
               href="/student-login"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-white/5 border border-white/5 text-sm font-bold text-zinc-300 hover:text-white transition-all"
+              className="flex items-center justify-center gap-2 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-sm font-bold text-white rounded transition-colors"
             >
-              Student login
-              <GraduationCap className="w-4 h-4 text-cyan-400" />
-            </Link>
-          </div>
-          <LayoutGroup id="mobile-nav">
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              const isActive =
-                link.href === '/'
-                  ? pathname === '/'
-                  : pathname === link.href || pathname.startsWith(`${link.href}/`);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`relative flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isActive
-                      ? 'text-white'
-                      : 'text-zinc-400 hover:text-white hover:bg-zinc-900/80'
-                  }`}
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="mobileNavActivePill"
-                      layout
-                      className="absolute inset-0 rounded-xl bg-indigo-500/20 border-l-4 border-indigo-500"
-                      transition={navPillTransition}
-                      initial={false}
-                    />
-                  )}
-                  <Icon className="relative z-10 w-5 h-5 text-indigo-400" />
-                  <span className="relative z-10">{link.label}</span>
-                </Link>
-              );
-            })}
-          </LayoutGroup>
-          <div className="pt-4 pb-2 border-t border-zinc-900 px-4 flex flex-col gap-3">
-            <Link
-              href="/jobs"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 text-center font-semibold text-white shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/25 transition-all"
-            >
-              Explore Schemes
-              <ArrowRight className="w-4 h-4" />
+              Student login <GraduationCap className="w-4 h-4" />
             </Link>
           </div>
         </div>

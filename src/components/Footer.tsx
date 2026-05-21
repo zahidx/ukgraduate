@@ -1,400 +1,266 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
-// Custom inline SVG icons matching standard platforms for 100% build reliability
+// Custom inline SVG icons matching standard platforms
 const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
   </svg>
 );
 
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
-    <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
   </svg>
 );
 
 const LinkedinIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
   </svg>
 );
 
 const YoutubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" />
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
   </svg>
 );
 
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
   </svg>
 );
 
-
-const ArrowUpIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <line x1="12" y1="19" x2="12" y2="5" />
-    <polyline points="5 12 12 5 19 12" />
+const TiktokIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
   </svg>
+);
+
+const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
+
+const AnimatedLink = ({ href, children }: { href: string, children: React.ReactNode }) => (
+  <Link 
+    href={href} 
+    className="relative inline-block transition-colors pb-1 font-normal group after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:bottom-0 after:left-0 after:bg-[#00D8C5] after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left"
+  >
+    {children}
+  </Link>
 );
 
 export default function Footer() {
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const [dismissHelp, setDismissHelp] = useState(false);
+  const footerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFooterVisible(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    if (footerRef.current) observer.observe(footerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert('Thank you for subscribing to our Career Newsletter!');
-  };
-
   return (
-    <footer className="relative bg-gradient-to-b from-zinc-950 via-zinc-950 to-[#0e0c1a] border-t border-white/5 py-20 mt-auto overflow-hidden text-zinc-300">
-      {/* Decorative Atmospheric Glows for Premium Aesthetic */}
-      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-0 left-12 w-[400px] h-[400px] rounded-full bg-purple-500/5 blur-[120px] pointer-events-none" />
-      
-      {/* Ultra-Premium Glowing Gradient Border Line at Top */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 via-purple-500 via-pink-500 via-yellow-400 to-transparent opacity-80" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <footer ref={footerRef} className="relative bg-[#2c2c2c] pt-16 pb-20 w-full overflow-hidden text-white font-sans">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-12 xl:px-20">
         
-        {/* Tier 1: Branding and Dynamic Newsletter Row */}
-        <div className="pb-12 mb-12 border-b border-white/10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7 space-y-4">
-            <div className="flex items-center gap-3">
-              <img 
-                src="/images/project.png" 
-                alt="UKGraduate Logo" 
-                className="h-10 md:h-12 w-auto object-contain brightness-110 filter drop-shadow-[0_0_10px_rgba(0,223,200,0.2)]" 
-              />
-              <span className="text-zinc-600 text-lg font-light">|</span>
-              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#00dfc8] bg-[#00dfc8]/5 border border-[#00dfc8]/20 px-2.5 py-1 rounded">
-                Alliance Gateway
-              </span>
-            </div>
-            <p className="text-sm text-zinc-400 max-w-xl leading-relaxed">
-              UKGraduate is the premier digital gateway bridging British industry leadership and exceptional academic talent, fostering strategic hiring pipelines across international technology, finance, and engineering sectors.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+          
+          {/* Column 1: Social Media & Address */}
+          <div className="flex flex-col">
+            <h2 className="text-[#00D8C5] text-3xl font-bold mb-8 tracking-wide">
+              SOCIAL MEDIA
+            </h2>
+            <p className="text-white text-[15px] mb-4 font-normal tracking-wide">
+              Follow us on social media:
             </p>
-          </div>
-          
-          <div className="lg:col-span-5">
-            <div className="glass-panel p-6 rounded-2xl border border-white/10 bg-zinc-900/60 backdrop-blur-xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-purple-500/10 blur-2xl group-hover:bg-purple-500/20 transition-all duration-500" />
-              <h4 className="text-sm font-extrabold text-white mb-2 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-                Join the Career Newsletter
-              </h4>
-              <p className="text-xs text-zinc-400 mb-4 font-medium">
-                Get notified instantly when premium FTSE 100 graduate schemes go live.
-              </p>
-              <form
-                onSubmit={handleSubscribe}
-                className="footer-newsletter-form grid grid-cols-1 gap-2 lg:grid-cols-[minmax(0,1fr)_auto]"
-              >
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter your email address"
-                  className="w-full min-w-0 h-11 bg-zinc-950/70 border border-white/10 focus:border-[#00dfc8]/60 focus:ring-2 focus:ring-[#00dfc8]/10 text-white rounded-xl px-4 text-xs font-semibold placeholder:text-zinc-500 outline-none transition-all"
-                />
-                <button
-                  type="submit"
-                  className="w-full lg:w-auto h-11 px-5 justify-self-stretch lg:justify-self-auto bg-gradient-to-r from-[#00dfc8] to-[#00bda9] text-zinc-950 font-black text-xs uppercase tracking-wider rounded-xl hover:shadow-[0_0_20px_rgba(0,223,200,0.3)] transition-all active:scale-95 duration-200 cursor-pointer"
+            <div className="flex gap-3 mb-8">
+              {[
+                { Icon: FacebookIcon, label: 'Facebook' },
+                { Icon: XIcon, label: 'X' },
+                { Icon: LinkedinIcon, label: 'LinkedIn' },
+                { Icon: YoutubeIcon, label: 'YouTube' },
+                { Icon: InstagramIcon, label: 'Instagram' },
+                { Icon: TiktokIcon, label: 'TikTok' },
+              ].map((social, idx) => (
+                <a
+                  key={idx}
+                  href="#"
+                  aria-label={social.label}
+                  className="w-[30px] h-[30px] bg-white flex items-center justify-center rounded-[2px] hover:bg-gray-200 transition-colors"
                 >
-                  Subscribe
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        {/* Tier 2: 4-Column Directory Links & Contacts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 border-b border-white/5">
-          
-          {/* Column 1: Alliance Office & Direct Contact Info */}
-          <div className="lg:col-span-4 space-y-6">
-            <div>
-              <h4 className="text-xs font-black uppercase tracking-[0.2em] text-[#00dfc8] mb-4">
-                Alliance Headquarters
-              </h4>
-              <div className="space-y-2 text-sm text-zinc-400 font-semibold leading-relaxed">
-                <p className="text-zinc-200 font-extrabold tracking-wide">UKGraduate Career Portal Ltd.</p>
-                <p>128 City Road</p>
-                <p>London, EC1V 2NX</p>
-                <p>United Kingdom</p>
-              </div>
-            </div>
-
-            <div className="space-y-3.5 pt-2">
-              <div className="text-xs sm:text-sm text-zinc-400 font-semibold">
-                <span className="text-zinc-500 font-bold block mb-1">Direct Inquiries:</span>
-                <a 
-                  href="tel:+442036090260" 
-                  className="text-white hover:text-[#00dfc8] transition-colors border-b border-white/10 hover:border-[#00dfc8]/50 font-black pb-0.5 tracking-wide text-sm"
-                >
-                  (+44) 0203 609 0260
+                  <social.Icon className="w-[18px] h-[18px] text-[#2c2c2c]" />
                 </a>
-              </div>
-              <div className="text-xs sm:text-sm text-zinc-400 font-semibold">
-                <span className="text-zinc-500 font-bold block mb-1">Email:</span>
-                <a 
-                  href="mailto:info@ukgraduate.org.uk" 
-                  className="text-white hover:text-[#00dfc8] transition-colors border-b border-white/10 hover:border-[#00dfc8]/50 font-black pb-0.5 tracking-wide text-sm"
-                >
-                  info@ukgraduate.org.uk
-                </a>
+              ))}
+            </div>
+
+            <hr className="border-t-[1.5px] border-[#9ca3af] w-full max-w-[280px] mb-8 opacity-50" />
+
+            <div className="space-y-1.5 text-[15px] font-normal tracking-wide text-white/95">
+              <p>UK Graduate College</p>
+              <p>3-5 Eastern Road,</p>
+              <p>Romford</p>
+              <p className="pb-3">RM1 3NH</p>
+              
+              <div className="flex flex-col gap-2 pt-2">
+                <p>
+                  Contact us:{' '}
+                  <a href="tel:+4402036090260" className="relative inline-block transition-colors pb-0.5 font-normal group after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:bottom-0 after:left-0 after:bg-[#00D8C5] after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left">
+                    (+44) 0203 609 0260
+                  </a>
+                </p>
+                <p>
+                  Mobile:{' '}
+                  <a href="tel:+447305179186" className="relative inline-block transition-colors pb-0.5 font-normal group after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:bottom-0 after:left-0 after:bg-[#00D8C5] after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left">
+                    (+44) 7305 179 186
+                  </a>
+                </p>
+                <p>
+                  Email:{' '}
+                  <a href="mailto:info@ukgraduate.org.uk" className="relative inline-block transition-colors pb-0.5 font-normal group after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:bottom-0 after:left-0 after:bg-[#00D8C5] after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left">
+                    info@ukgraduate.org.uk
+                  </a>
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Column 2: Explore Portal */}
-          <div className="lg:col-span-3 lg:pl-4 space-y-5">
-            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">
-              Explore Portal
-            </h4>
-            <ul className="space-y-3 text-xs sm:text-sm font-bold text-zinc-400">
-              <li>
-                <Link href="/jobs" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Graduate Schemes
-                </Link>
-              </li>
-              <li>
-                <Link href="/jobs" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Immediate Entry Roles
-                </Link>
-              </li>
-              <li>
-                <Link href="/universities" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Partner Registry
-                </Link>
-              </li>
-              <li>
-                <Link href="/resources" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Salary Calculators
-                </Link>
-              </li>
-              <li>
-                <Link href="/resources" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  CV Template Bundle
-                </Link>
-              </li>
-              <li>
-                <Link href="/resources" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Assessment Prep
-                </Link>
-              </li>
-              <li>
-                <Link href="/universities" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Institutional Resources
-                </Link>
-              </li>
+          {/* Column 2: Explore UEL */}
+          <div className="flex flex-col">
+            <h2 className="text-[#00D8C5] text-3xl font-bold mb-8 tracking-wide">
+              EXPLORE UEL
+            </h2>
+            <ul className="space-y-3 text-[15px] tracking-wide text-white/95">
+              {[
+                'About UEL',
+                'Take a virtual tour',
+                'Calendars',
+                'Accreditations',
+                'Governance management',
+                'Services and departments',
+                'Find us',
+                'Contact us'
+              ].map((item, idx) => (
+                <li key={idx}>
+                  <AnimatedLink href="#">{item}</AnimatedLink>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 3: The Alliance */}
-          <div className="lg:col-span-2 space-y-5">
-            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">
-              The Alliance
-            </h4>
-            <ul className="space-y-3 text-xs sm:text-sm font-bold text-zinc-400">
-              <li>
-                <Link href="/universities" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Partner Universities
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Industry Streams
-                </Link>
-              </li>
-              <li>
-                <Link href="/resources" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Employability Metrics
-                </Link>
-              </li>
-              <li>
-                <Link href="/resources" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Integration API
-                </Link>
-              </li>
-              <li>
-                <a href="#" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                  <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                  Mentorship Programs
-                </a>
-              </li>
+          {/* Column 3: The University */}
+          <div className="flex flex-col">
+            <h2 className="text-[#00D8C5] text-3xl font-bold mb-8 tracking-wide">
+              THE UNIVERSITY
+            </h2>
+            <ul className="space-y-3 text-[15px] tracking-wide text-white/95">
+              {[
+                'Undergraduate',
+                'Postgraduate',
+                'News',
+                'Events',
+                'Blog',
+                'Jobs'
+              ].map((item, idx) => (
+                <li key={idx}>
+                  <AnimatedLink href="#">{item}</AnimatedLink>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 4: System Info & Support */}
-          <div className="lg:col-span-3 space-y-6">
-            <div className="space-y-5">
-              <h4 className="text-xs font-black uppercase tracking-[0.2em] text-white">
-                Support & Status
-              </h4>
-              <ul className="space-y-3 text-xs sm:text-sm font-bold text-zinc-400">
-                <li>
-                  <a href="#" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                    <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                    Help & Support
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-[#00dfc8] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1 group">
-                    <span className="h-[1px] w-0 bg-[#00dfc8] group-hover:w-2 transition-all duration-200" />
-                    Contact Support
-                  </a>
-                </li>
-              </ul>
-            </div>
-            
-            {/* Elegant Operational Badge */}
-            <div className="pt-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20 shadow-inner">
-                <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse-slow" />
-                <span className="text-[10px] font-black tracking-wider text-emerald-400 uppercase">
-                  System Status: Operational
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
 
-        {/* Tier 3: Bottom Legal strip & Social Connect Row */}
-        <div className="pt-8 flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-8 text-xs text-zinc-500 font-semibold">
+        {/* Bottom Strip */}
+        <div className="mt-20 flex flex-col xl:flex-row items-start xl:items-end gap-12 text-[14px] font-normal text-white/90 tracking-wide">
+          <p className="max-w-[200px] leading-relaxed">
+            Copyright @2026 University of East London
+          </p>
           
-          <div className="space-y-4">
-            <p>© {new Date().getFullYear()} UKGraduate Career Portal Ltd. All rights reserved.</p>
-            
-            {/* Legal / Policy Links */}
-            <div className="flex flex-wrap gap-x-5 gap-y-2.5 text-zinc-400 font-bold max-w-3xl">
-              <a href="#" className="hover:text-white transition-colors">Accessibility</a>
-              <span className="text-zinc-800">·</span>
-              <a href="#" className="hover:text-white transition-colors">Data protection</a>
-              <span className="text-zinc-800">·</span>
-              <a href="#" className="hover:text-white transition-colors">Sitemap</a>
-              <span className="text-zinc-800">·</span>
-              <a href="#" className="hover:text-white transition-colors">Modern slavery</a>
-              <span className="text-zinc-800">·</span>
-              <a href="#" className="hover:text-white transition-colors">Legal and compliance</a>
-              <span className="text-zinc-800">·</span>
-              <a href="#" className="hover:text-white transition-colors">Cookie settings</a>
-              <span className="text-zinc-800">·</span>
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <span className="text-zinc-800">·</span>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+          <div className="flex flex-col gap-5 flex-1 w-full xl:ml-12">
+            <div className="flex flex-wrap gap-x-8 gap-y-4">
+              <AnimatedLink href="#">Accessibility</AnimatedLink>
+              <AnimatedLink href="#">Data protection</AnimatedLink>
+              <AnimatedLink href="#">Sitemap</AnimatedLink>
+              <AnimatedLink href="#">AccessAble</AnimatedLink>
+              <AnimatedLink href="#">Modern slavery</AnimatedLink>
+              <AnimatedLink href="#">Legal and compliance</AnimatedLink>
             </div>
-          </div>
-
-          {/* Glowing Glassmorphic Social Media Connect Circle Badges */}
-          <div className="flex flex-col gap-3">
-            <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest self-start lg:self-end">
-              CONNECT WITH THE ALLIANCE
-            </span>
-            <div className="flex flex-wrap gap-2.5">
-              <a 
-                href="https://facebook.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/5 bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-[#1877F2]/10 hover:border-[#1877F2]/40 hover:text-[#1877F2] hover:scale-110 hover:shadow-[0_0_15px_rgba(24,119,242,0.2)] transition-all duration-300"
-                aria-label="Facebook"
-              >
-                <FacebookIcon className="w-5 h-5 fill-current stroke-[1]" />
-              </a>
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/5 bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-white hover:border-white hover:text-zinc-950 hover:scale-110 hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all duration-300"
-                aria-label="X (formerly Twitter)"
-              >
-                <XIcon className="w-4.5 h-4.5 fill-none" />
-              </a>
-              <a 
-                href="https://linkedin.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/5 bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-[#0A66C2]/10 hover:border-[#0A66C2]/40 hover:text-[#0A66C2] hover:scale-110 hover:shadow-[0_0_15px_rgba(10,102,194,0.2)] transition-all duration-300"
-                aria-label="LinkedIn"
-              >
-                <LinkedinIcon className="w-4.5 h-4.5 fill-none" />
-              </a>
-              <a 
-                href="https://youtube.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/5 bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-[#FF0000]/10 hover:border-[#FF0000]/40 hover:text-[#FF0000] hover:scale-110 hover:shadow-[0_0_15px_rgba(255,0,0,0.2)] transition-all duration-300"
-                aria-label="YouTube"
-              >
-                <YoutubeIcon className="w-5 h-5 fill-none" />
-              </a>
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/5 bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-[#E1306C]/10 hover:border-[#E1306C]/40 hover:text-[#E1306C] hover:scale-110 hover:shadow-[0_0_15px_rgba(225,48,108,0.2)] transition-all duration-300"
-                aria-label="Instagram"
-              >
-                <InstagramIcon className="w-4.5 h-4.5 fill-none" />
-              </a>
+            <div className="flex flex-wrap gap-x-8 gap-y-4">
+              <AnimatedLink href="#">Cookie settings</AnimatedLink>
+              <AnimatedLink href="#">Privacy</AnimatedLink>
             </div>
           </div>
         </div>
       </div>
 
-      {/* STICKY/ABSOLUTE DECORATIVE & INTERACTIVE ELEMENTS */}
-      
-      {/* 1. Yellow vertical feedback tab "Help us improve →" */}
-      <div className="hidden md:flex absolute right-0 top-16 z-20 items-center">
+      {/* Floating Buttons with Scroll Visibility and Close on Hover */}
+      <div 
+        className={`fixed right-0 top-1/4 z-50 transition-all duration-700 ease-in-out group ${
+          isFooterVisible && !dismissHelp ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'
+        }`}
+      >
+        <button 
+          onClick={(e) => { e.preventDefault(); setDismissHelp(true); }}
+          className="absolute -top-3 -left-3 bg-[#2c2c2c] border border-white/20 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md z-10 hover:bg-gray-700"
+          aria-label="Close"
+        >
+          <CloseIcon className="w-2.5 h-2.5" />
+        </button>
         <a 
           href="#"
-          className="bg-[#ffcc00] hover:bg-[#ffd633] text-zinc-950 font-black text-[10px] uppercase tracking-wider py-4 px-2.5 rounded-l-xl shadow-2xl hover:shadow-[0_0_20px_rgba(255,204,0,0.35)] transition-all hover:-translate-x-1 duration-300 flex items-center gap-2 group cursor-pointer"
-          style={{
-            writingMode: 'vertical-rl',
-            textOrientation: 'mixed',
-          }}
+          className="bg-[#FFC72C] text-[#2c2c2c] hover:bg-[#ffda66] transition-colors font-semibold text-[16px] py-4 w-11 flex flex-col items-center justify-center rounded-l-md shadow-lg"
         >
-          <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-zinc-950 animate-ping" />
-            <span>Help us improve</span>
+          <svg className="w-5 h-5 mb-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
+          </svg>
+          <span 
+            style={{ 
+              writingMode: 'vertical-rl', 
+              transform: 'rotate(180deg)' 
+            }}
+            className="tracking-wide"
+          >
+            Help us improve
           </span>
-          <span className="text-sm font-black transition-transform group-hover:translate-y-1 duration-200">→</span>
         </a>
       </div>
 
-      {/* 2. Sleek Back to Top Button */}
-      <button 
-        onClick={scrollToTop}
-        className="absolute right-6 bottom-6 z-20 w-14 h-16 rounded-xl bg-zinc-900 border border-white/10 hover:border-[#00dfc8]/50 text-white flex flex-col items-center justify-center transition-all duration-300 group active:scale-95 shadow-2xl hover:shadow-[0_0_20px_rgba(0,223,200,0.2)] cursor-pointer"
-        aria-label="Back to top"
+      <div
+        className={`fixed right-4 bottom-4 lg:right-6 lg:bottom-6 z-50 transition-all duration-700 ease-in-out group ${
+          isFooterVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'
+        }`}
       >
-        <ArrowUpIcon className="w-5 h-5 text-[#00dfc8] group-hover:-translate-y-1 transition-transform duration-300" />
-        <span className="text-[9px] font-black uppercase tracking-tight text-center leading-none mt-1.5 text-zinc-400 group-hover:text-white transition-colors">
-          Back<br />to top
-        </span>
-      </button>
+        <button 
+          onClick={scrollToTop}
+          className="w-16 py-3 bg-[#f8f9fa] text-[#2c2c2c] flex flex-col items-center justify-center shadow-[0_4px_14px_rgba(0,0,0,0.25)] hover:bg-gray-200 transition-colors rounded-md relative"
+          aria-label="Back to top"
+        >
+          <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
+          </svg>
+          <span className="text-[12px] font-light tracking-wide text-center leading-[1.2]">
+            Back<br />to top
+          </span>
+        </button>
+      </div>
+
     </footer>
   );
 }

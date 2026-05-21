@@ -49,7 +49,7 @@ export default function Home() {
                     <ArrowRight className="w-5 h-5 text-zinc-950 stroke-[3px] group-hover:translate-x-1 duration-200" />
                   </Link>
                   <Link
-                    href="/universities"
+                    href="/campus"
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 bg-white/5 hover:bg-white/10 text-white font-bold transition-all duration-200 text-sm rounded border border-white/10"
                   >
                     Explore Universities
@@ -99,13 +99,13 @@ export default function Home() {
                   Select course type
                 </label>
                 <div className="relative">
-                  <select className="w-full h-[56px] appearance-none bg-[#fce7f3] text-zinc-950 font-bold px-5 rounded-xl border border-transparent focus:outline-none focus:ring-4 focus:ring-[#fce7f3]/30 transition-all cursor-pointer shadow-inner">
-                    <option value="" className="bg-white text-zinc-950">Undergraduate</option>
-                    <option value="postgrad" className="bg-white text-zinc-950">Postgraduate</option>
-                    <option value="short" className="bg-white text-zinc-950">Short Courses</option>
-                    <option value="apprenticeship" className="bg-white text-zinc-950">Degree Apprenticeships</option>
+                  <select className="w-full h-[56px] appearance-none bg-[#fbcfe8] text-zinc-900 font-medium text-[16px] px-4 rounded-sm border border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 transition-all cursor-pointer">
+                    <option value="" className="bg-[#fbcfe8] text-zinc-900">Undergraduate</option>
+                    <option value="postgrad" className="bg-[#fbcfe8] text-zinc-900">Postgraduate</option>
+                    <option value="short" className="bg-[#fbcfe8] text-zinc-900">Short course</option>
+                    <option value="apprenticeship" className="bg-[#fbcfe8] text-zinc-900">Apprenticeship</option>
                   </select>
-                  <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-950 pointer-events-none" />
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-900 font-light pointer-events-none" />
                 </div>
               </div>
 
@@ -353,6 +353,7 @@ export default function Home() {
         </section>
 
         {/* Section 2.3: "Pioneering Futures" Graduate Success Spotlights (Testimonials Grid) */}
+        {false && (
         <section className="py-20 bg-zinc-900 border-t border-white/5 relative overflow-hidden">
           {/* Subtle bg glow */}
           <div className="absolute top-1/2 left-1/4 w-80 h-80 rounded-full bg-cyan-500/5 blur-[120px] pointer-events-none" />
@@ -455,6 +456,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+        )}
+
 
         {/* Section 2.6: Careers News & Insights Hub */}
         <section className="py-20 bg-zinc-900 border-t border-white/5 relative">
@@ -589,6 +592,7 @@ export default function Home() {
         </section>
 
         {/* Section 4: Accreditations Alliance trust badge ribbon */}
+        {false && (
         <section className="py-20 bg-zinc-950 border-b border-white/5 relative overflow-hidden select-none">
           {/* Subtle Ambient Radial Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[150px] rounded-full bg-cyan-500/5 blur-[120px] pointer-events-none" />
@@ -722,6 +726,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        )}
       </main>
 
       {/* Footer Section */}
